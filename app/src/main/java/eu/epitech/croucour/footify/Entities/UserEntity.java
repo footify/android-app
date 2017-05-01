@@ -24,6 +24,7 @@ public class UserEntity implements Serializable{
     @SerializedName("updated_at")
     private String _updated_at = null;
 
+
     public String get_id() {
         return _id;
     }

@@ -8,4 +8,5 @@ import eu.epitech.croucour.footify.Entities.UserEntity;
 
 public interface IHomeView {
 
+    void startScan();
 }

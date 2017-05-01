@@ -25,26 +25,26 @@
                 android:id="@+id/tab_1_scan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/empty_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:elevation="50dp"
-                android:visibility="visible"
-                android:text="Veuillez scanner un Babyfoot" />
+                <TextView
+                    android:id="@+id/empty_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:elevation="50dp"
+                    android:visibility="visible"
+                    android:text="Veuillez scanner un Babyfoot" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="bottom|center"
-                android:backgroundTint="#c78829"
-                android:layout_marginBottom="50dp"
-                android:src="@drawable/ic_qrcode_white_24dp"
-                android:id="@+id/spredcast_floatActionButton"
-                app:layout_anchorGravity="bottom|center" />
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom|center"
+                    android:backgroundTint="#c78829"
+                    android:layout_marginBottom="50dp"
+                    android:src="@drawable/ic_qrcode_white_24dp"
+                    android:id="@+id/floatActionButton_scan"
+                    app:layout_anchorGravity="bottom|center" />
 
             </android.support.design.widget.CoordinatorLayout>
         </android.support.design.widget.CoordinatorLayout>

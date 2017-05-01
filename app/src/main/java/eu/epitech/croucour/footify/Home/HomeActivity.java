@@ -1,5 +1,6 @@
 package eu.epitech.croucour.footify.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -35,12 +36,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import eu.epitech.croucour.footify.DAO.Manager;
+import eu.epitech.croucour.footify.DecoderQrCode.DecoderQrCodeActivity;
 import eu.epitech.croucour.footify.Entities.TokenEntity;
 import eu.epitech.croucour.footify.Entities.UserEntity;
 import eu.epitech.croucour.footify.Home.TabLayout.ViewPagerAdapter;
 import eu.epitech.croucour.footify.R;
-
-import static eu.epitech.croucour.footify.R.id.searchBar;
 
 /**
  * Created by croucour on 29/04/17.
@@ -95,6 +95,8 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
         _tabLayout.setupWithViewPager(_viewPager);
 
         initSearch();
+
+
 
     }
 
@@ -264,5 +266,11 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
                 _drawerLayout.openDrawer(GravityCompat.START);
                 break;
         }
+    }
+
+    @Override
+    public void startScan() {
+        Intent intent = new Intent(HomeActivity.this, DecoderQrCodeActivity.class);
+        startActivity(intent);
     }
 }

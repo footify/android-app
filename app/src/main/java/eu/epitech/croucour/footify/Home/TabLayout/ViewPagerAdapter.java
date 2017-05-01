@@ -1,6 +1,9 @@
 package eu.epitech.croucour.footify.Home.TabLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,8 +21,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.epitech.croucour.footify.Home.HomeActivity;
 import eu.epitech.croucour.footify.R;
 import eu.epitech.croucour.footify.Home.IHomeView;
+import eu.epitech.croucour.footify.SignInSignUp.SignInSignUpActivity;
 
 /**
  * Created by roucou_c on 21/09/2016.
@@ -52,10 +57,19 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         fragmentTitles.add(title);
     }
 
-    public static class TabFragment extends Fragment {
+    public static class TabFragment extends Fragment implements View.OnClickListener {
 
         private String step;
         public IHomeView _iHomeView;
+
+        /**
+         * Tab 1
+         */
+        private CoordinatorLayout _coordinatorLayoutScan;
+        private FloatingActionButton _floatingActionScan;
+
+
+
         public static TabFragment newInstance(String step, IHomeView iHomeView) {
             TabFragment fragment = new TabFragment();
             fragment.step = step;
@@ -76,6 +90,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 switch (step) {
                     case "1":
                         rootView = inflater.inflate(R.layout.tab_1, container, false);
+                        _coordinatorLayoutScan = (CoordinatorLayout) rootView.findViewById(R.id.tab_1_scan);
+
+                        _floatingActionScan = (FloatingActionButton) rootView.findViewById(R.id.floatActionButton_scan);
+                        _floatingActionScan.setOnClickListener(this);
+
                         break;
                     case "2":
                         rootView = inflater.inflate(R.layout.tab_1, container, false);
@@ -86,6 +105,16 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 }
             }
             return rootView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.floatActionButton_scan:
+                    _iHomeView.startScan();
+                    break;
+            }
+
         }
     }
 
