@@ -109,7 +109,7 @@ public class ViewPagerBabyFootAdapter extends FragmentPagerAdapter {
             if (step != null) {
                 switch (step) {
                     case "1":
-                        rootView = inflater.inflate(R.layout.babyfoot_tab_1, container, false);
+                        rootView = inflater.inflate(R.layout.babyfoot, container, false);
 
                         _babyfoot_name = (TextView) rootView.findViewById(R.id.babyfoot_name);
                         _babyfoot_manufacter = (TextView) rootView.findViewById(R.id.babyfoot_manufacturer);
@@ -117,6 +117,12 @@ public class ViewPagerBabyFootAdapter extends FragmentPagerAdapter {
                         _babyfoot_pub_name = (TextView) rootView.findViewById(R.id.babyfoot_pub_name);
 
                         if (_pubEntity != null) {
+                            _babyfoot_pub_name.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    _iBabyFootView.startPubActivity();
+                                }
+                            });
                             _babyfoot_pub_name.setText(_pubEntity.get_name());
                         }
                         if (_babyFootEntity != null) {
@@ -145,7 +151,7 @@ public class ViewPagerBabyFootAdapter extends FragmentPagerAdapter {
 
                         break;
                     case "2":
-                        rootView = inflater.inflate(R.layout.babyfoot_tab_2, container, false);
+                        rootView = inflater.inflate(R.layout.ranking, container, false);
 
                         _baby_ranking_recycler_view = (RecyclerView) rootView.findViewById(R.id.baby_ranking_recycler_view);
 

@@ -30,8 +30,8 @@ public class GameService extends MyService {
 
     public interface IGameService {
         @Headers("Content-Type: application/json")
-        @POST("/")
-        Call<GameEntity> addGame(@Body Map<String, Object> params);
+        @POST("matches")
+        Call<Void> addGame(@Body Map<String, Object> params);
     }
 
     private final IGameAddView _view;
@@ -43,21 +43,21 @@ public class GameService extends MyService {
     }
 
     public void addGame(HashMap<String, Object> params) {
-        Call<GameEntity> call = _api.addGame(params);
-        call.enqueue(new Callback<GameEntity>() {
+        Call<Void> call = _api.addGame(params);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<GameEntity> call, Response<GameEntity> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
 
                 if (response.isSuccessful()) {
                     _view.finishAddGame();
                 }
-                else {
-
+                else if (response.code() == 404){
+                    _view.setErrorPseudoNotExist("");
                 }
             }
 
             @Override
-            public void onFailure(Call<GameEntity> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
             }
         });
     }

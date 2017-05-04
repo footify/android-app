@@ -38,4 +38,8 @@ public class HomePresenter {
     public void getFriendHistoric() {
         _homeService.getFriendHistoric();
     }
+
+    public void getPubAndShow(String pub_id) {
+        _homeService.getPubAndShow(pub_id);
+    }
 }

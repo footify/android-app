@@ -13,8 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import eu.epitech.croucour.footify.Entities.FriendEntity;
@@ -75,6 +80,21 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 _iGameView.shareGame(gameEntity);
             }
         });
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.FRANCE);
+
+        if (gameEntity.get_start_date() != null) {
+            Date date = null;
+            try {
+                date = format.parse(gameEntity.get_start_date());
+                cal.setTime(date);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+                holder._game_date.setText(dateFormat.format(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

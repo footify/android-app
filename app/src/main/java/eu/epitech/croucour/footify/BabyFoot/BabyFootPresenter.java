@@ -26,4 +26,12 @@ public class BabyFootPresenter {
     public void getRanking(String babyFootEntity_id) {
         _babyFootService.getRanking(babyFootEntity_id);
     }
+
+    public void getBabyFoot(String babyFoot_id) {
+        _babyFootService.getBabyFoot(babyFoot_id);
+    }
+
+    public void getPub(String bar_id) {
+        _babyFootService.getPub(bar_id);
+    }
 }

@@ -20,5 +20,6 @@
 
     <string name="pseudo_already_use">Ce pseudo est déjà utilisé</string>
     <string name="email_already_use">Email déjà utilisé</string>
+    <string name="error">Une erreur est survenue</string>
 
 </resources>

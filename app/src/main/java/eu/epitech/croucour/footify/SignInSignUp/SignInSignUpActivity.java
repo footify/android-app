@@ -144,10 +144,4 @@ public final class SignInSignUpActivity extends AppCompatActivity implements ISi
         super.onActivityResult(requestCode, resultCode, data);
         _apiLogin.onActivityResult(requestCode, resultCode, data);
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
-//    }
 }

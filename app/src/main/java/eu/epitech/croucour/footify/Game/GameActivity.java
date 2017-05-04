@@ -2,6 +2,8 @@ package eu.epitech.croucour.footify.Game;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -9,12 +11,12 @@ import android.view.View;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.Objects;
+
 import eu.epitech.croucour.footify.DAO.Manager;
 import eu.epitech.croucour.footify.Entities.BabyFootEntity;
-import eu.epitech.croucour.footify.Entities.GameEntity;
 import eu.epitech.croucour.footify.Entities.TokenEntity;
 import eu.epitech.croucour.footify.R;
-import eu.epitech.croucour.footify.SignInSignUp.ISignInSignUpView;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
@@ -33,6 +35,7 @@ public final class GameActivity extends AppCompatActivity implements IGameAddVie
     private MaterialEditText _game_add_team2_user2;
     private MaterialEditText _game_add_team2_score;
     private FancyButton _game_add_submit;
+    private CoordinatorLayout _coordinatorLayout;
 
 
     @Override
@@ -59,14 +62,24 @@ public final class GameActivity extends AppCompatActivity implements IGameAddVie
         _game_add_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _gamePresenter.addGame(_babyFootEntity.get_id());
+                _gamePresenter.addGame();
             }
         });
+
+        _coordinatorLayout = (CoordinatorLayout) findViewById(R.id.display_snackbar);
+
+
+        _game_add_team1_user1.setText("user1");
+        _game_add_team1_user2.setText("user2");
+        _game_add_team2_user1.setText("user3");
+        _game_add_team2_user2.setText("user4");
+        _game_add_team2_score.setText("1");
+        _game_add_team1_score.setText("9");
     }
 
     @Override
     public void addGame(String babyFootEntity_id) {
-        _gamePresenter.addGame(babyFootEntity_id);
+        _gamePresenter.addGame();
     }
 
     @Override
@@ -151,5 +164,39 @@ public final class GameActivity extends AppCompatActivity implements IGameAddVie
     @Override
     public void setErrorTeam2Score(int resId) {
         _game_add_team2_score.setError(resId == 0 ? null : getString(resId));
+    }
+
+    @Override
+    public void setErrorPseudoNotExist(String pseudo) {
+
+        String team1_user1 = getTeam1User1();
+        String team1_user2 = getTeam1User2();
+        String team2_user1 = getTeam2User1();
+        String team2_user2 = getTeam2User2();
+
+        if (Objects.equals(pseudo, team1_user1)) {
+            setErrorTeam1User1(R.string.pseudo_already_use);
+        }
+        else if (Objects.equals(pseudo, team1_user2)) {
+            setErrorTeam1User2(R.string.pseudo_already_use);
+        }
+        else if (Objects.equals(pseudo, team2_user1)) {
+            setErrorTeam2User1(R.string.pseudo_already_use);
+        }
+        else if (Objects.equals(pseudo, team2_user2)) {
+            setErrorTeam2User2(R.string.pseudo_already_use);
+        }
+        else {
+            if (_coordinatorLayout != null) {
+                Snackbar snackbar = Snackbar
+                        .make(_coordinatorLayout, R.string.error, Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        }
+    }
+
+    @Override
+    public BabyFootEntity getBabyFootEntity() {
+        return _babyFootEntity;
     }
 }

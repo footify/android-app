@@ -19,4 +19,16 @@ public class PubPresenter {
         _manager = manager;
         _pubService = new PubService(view, manager, tokenEntity);
     }
+
+    public void getBabyFoots(String pub_id) {
+        _pubService.getBabyFoots(pub_id);
+    }
+
+    public void getHistoric(String pub_id) {
+        _pubService.getHistoric(pub_id);
+    }
+
+    public void getPubRanking(String pub_id) {
+        _pubService.getPubRanking(pub_id);
+    }
 }

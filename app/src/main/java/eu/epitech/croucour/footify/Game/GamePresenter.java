@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import eu.epitech.croucour.footify.DAO.Manager;
+import eu.epitech.croucour.footify.Entities.BabyFootEntity;
 import eu.epitech.croucour.footify.Entities.GameEntity;
 import eu.epitech.croucour.footify.Entities.TokenEntity;
 import eu.epitech.croucour.footify.R;
@@ -24,8 +25,9 @@ public class GamePresenter {
         this._gameService = new GameService(view, manager, tokenEntity);
     }
 
-    public void addGame(String babyFootEntity_id) {
+    public void addGame() {
 
+        BabyFootEntity babyEntity = _view.getBabyFootEntity();
         String team1_user1 = _view.getTeam1User1();
         String team1_user2 = _view.getTeam1User2();
         String team1_score = _view.getTeam1Score();
@@ -70,7 +72,7 @@ public class GamePresenter {
             red_team.add(team2_user2);
 
             HashMap<String, Object> params = new HashMap<>();
-            params.put("baby_id", babyFootEntity_id);
+            params.put("baby_id", babyEntity.get_id());
             params.put("blue_team", blue_team);
             params.put("red_team", red_team);
             params.put("blue_score", Integer.parseInt(team1_score));

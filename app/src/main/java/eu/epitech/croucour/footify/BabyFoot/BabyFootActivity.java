@@ -1,8 +1,10 @@
 package eu.epitech.croucour.footify.BabyFoot;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +13,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.List;
+import java.util.Objects;
 
 import eu.epitech.croucour.footify.BabyFoot.TabLayout.ViewPagerBabyFootAdapter;
 import eu.epitech.croucour.footify.DAO.Manager;
@@ -25,11 +32,12 @@ import eu.epitech.croucour.footify.Entities.BabyFootEntity;
 import eu.epitech.croucour.footify.Entities.GameEntity;
 import eu.epitech.croucour.footify.Entities.LigueRankingEntity;
 import eu.epitech.croucour.footify.Entities.PubEntity;
+import eu.epitech.croucour.footify.Entities.TeamEntity;
 import eu.epitech.croucour.footify.Entities.TokenEntity;
 import eu.epitech.croucour.footify.Game.GameActivity;
 import eu.epitech.croucour.footify.Game.GameAdapter;
 import eu.epitech.croucour.footify.Game.IGameView;
-import eu.epitech.croucour.footify.Profile.FriendAdapter;
+import eu.epitech.croucour.footify.Pub.PubActivity;
 import eu.epitech.croucour.footify.R;
 import eu.epitech.croucour.footify.Ranking.IRankingView;
 
@@ -49,6 +57,13 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
     private PubEntity _pubEntity;
     private Toolbar _toolbar;
     private DisplayImageOptions _displayImageOptions;
+    private TextView _babyfoot_name;
+    private TextView _babyfoot_manufacter;
+    private ImageView _babyfoot_picture;
+    private TextView _babyfoot_pub_name;
+    private RecyclerView _baby_historic_recycler_view;
+    private GameAdapter _game_adapter;
+    private FloatingActionButton _game_floatingAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,23 +85,64 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
 
         _babyFootPresenter = new BabyFootPresenter(this, _manager, tokenEntity);
 
-        _tabLayout = (TabLayout) findViewById(R.id.tabs);
-        _viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        _tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        _viewPager = (ViewPager) findViewById(R.id.viewpager);
+//
+//        _viewPagerAdapter = new ViewPagerBabyFootAdapter(getSupportFragmentManager());
+//        _viewPagerAdapter.addTab(ViewPagerBabyFootAdapter.TabFragment.newInstance("1", this, this, this), "BabyFoot");
+//        _viewPagerAdapter.addTab(ViewPagerBabyFootAdapter.TabFragment.newInstance("2", this, this, this), "Classement");
+//
+//        _viewPager.setOffscreenPageLimit(2);
+//
+//        _viewPager.setAdapter(_viewPagerAdapter);
+//
+//        _tabLayout.setupWithViewPager(_viewPager);
 
-        _viewPagerAdapter = new ViewPagerBabyFootAdapter(getSupportFragmentManager());
-        _viewPagerAdapter.addTab(ViewPagerBabyFootAdapter.TabFragment.newInstance("1", this, this, this), "BabyFoot");
-        _viewPagerAdapter.addTab(ViewPagerBabyFootAdapter.TabFragment.newInstance("2", this, this, this), "Classement");
+//        ViewPagerBabyFootAdapter.TabFragment  fragment = _viewPagerAdapter.getItem(0);
+//        fragment.setBabyFoot(_babyFootEntity);
+//        fragment.setPub(_pubEntity);
 
-        _viewPager.setOffscreenPageLimit(2);
+        _babyfoot_name = (TextView) findViewById(R.id.babyfoot_name);
+        _babyfoot_manufacter = (TextView) findViewById(R.id.babyfoot_manufacturer);
+        _babyfoot_picture = (ImageView) findViewById(R.id.babyfoot_photo);
+        _babyfoot_pub_name = (TextView) findViewById(R.id.babyfoot_pub_name);
 
-        _viewPager.setAdapter(_viewPagerAdapter);
+        populatePudAndBaby();
+        _baby_historic_recycler_view = (RecyclerView) findViewById(R.id.baby_historic_recycler_view);
 
-        _tabLayout.setupWithViewPager(_viewPager);
+        _game_adapter = new GameAdapter(getApplicationContext(), this);
+        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getApplicationContext());
+        _baby_historic_recycler_view.setLayoutManager(mLayoutManager3);
+        _baby_historic_recycler_view.setItemAnimator(new DefaultItemAnimator());
+        _baby_historic_recycler_view.setAdapter(_game_adapter);
 
-        ViewPagerBabyFootAdapter.TabFragment  fragment = _viewPagerAdapter.getItem(0);
-        fragment.setBabyFoot(_babyFootEntity);
-        fragment.setPub(_pubEntity);
+        _game_floatingAction = (FloatingActionButton) findViewById(R.id.game_floatActionButton);
 
+        _game_floatingAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addGame(_babyFootEntity.get_id());
+            }
+        });
+        getHistoric(_babyFootEntity.get_id());
+
+    }
+
+    private void populatePudAndBaby() {
+        if (_pubEntity != null) {
+            _babyfoot_pub_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startPubActivity();
+                }
+            });
+            _babyfoot_pub_name.setText(_pubEntity.get_name());
+        }
+        if (_babyFootEntity != null) {
+            _babyfoot_name.setText(_babyFootEntity.get_name());
+            _babyfoot_manufacter.setText(_babyFootEntity.get_manufacturer());
+            setImage(_babyFootEntity.get_picture_url(), _babyfoot_picture);
+        }
     }
 
     @Override
@@ -98,14 +154,15 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
         setSupportActionBar(_toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("BabyFoot");
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        _babyFootPresenter.getAbo();
-//        _babyFootPresenter.getSpredCasts(1);
-//        _babyFootPresenter.getSpredCasts(0);
+
+        _babyFootPresenter.getBabyFoot(_babyFootEntity.get_id());
     }
 
     @Override
@@ -176,8 +233,7 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
 
     @Override
     public void setHistoric(List<GameEntity> gameEntities) {
-        ViewPagerBabyFootAdapter.TabFragment  fragment = _viewPagerAdapter.getItem(0);
-        fragment.setGameEntities(gameEntities);
+        _game_adapter.setGameEntities(gameEntities);
     }
 
     @Override
@@ -194,7 +250,31 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
 
     @Override
     public void shareGame(GameEntity gameEntity) {
+        TeamEntity teamEntity = gameEntity.get_teams().get(0);
+        TeamEntity teamEntity2 = gameEntity.get_teams().get(1);
 
+        String winner;
+        String loser;
+
+        if (Objects.equals(gameEntity.get_winner(), teamEntity.get_id())) {
+            winner = teamEntity.get_players().get(0).get_pseudo()+" & "+teamEntity.get_players().get(1).get_pseudo();
+            loser = teamEntity2.get_players().get(0).get_pseudo()+" & "+teamEntity2.get_players().get(1).get_pseudo();
+        }
+        else {
+            loser = teamEntity.get_players().get(0).get_pseudo()+" & "+teamEntity.get_players().get(1).get_pseudo();
+            winner = teamEntity2.get_players().get(0).get_pseudo()+" & "+teamEntity2.get_players().get(1).get_pseudo();
+        }
+
+        String title = winner+" ont gagné contre "+loser;
+        String description = "La fin du match s'est fini avec le score de " + gameEntity.get_scores().get(0) + "-"+gameEntity.get_scores().get(1);
+
+
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentTitle(title)
+                .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                .setContentDescription(description)
+                .build();
+        ShareDialog.show(this, content);
     }
 
     @Override
@@ -206,5 +286,24 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
     public void setRanking(List<LigueRankingEntity> ligueRankingEntities) {
         ViewPagerBabyFootAdapter.TabFragment  fragment = _viewPagerAdapter.getItem(1);
         fragment.setLigueRankingEntities(ligueRankingEntities);
+    }
+
+    @Override
+    public void setBabyFoot(BabyFootEntity babyFootEntity) {
+        _babyFootPresenter.getPub(babyFootEntity.get_bar_id());
+        _babyFootEntity = babyFootEntity;
+    }
+
+    @Override
+    public void setPub(PubEntity pubEntity) {
+        _pubEntity = pubEntity;
+        populatePudAndBaby();
+    }
+
+    @Override
+    public void startPubActivity() {
+        Intent intent = new Intent(this, PubActivity.class);
+        intent.putExtra("pubEntity", _pubEntity);
+        startActivity(intent);
     }
 }

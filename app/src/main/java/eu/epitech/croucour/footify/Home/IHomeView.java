@@ -14,8 +14,6 @@ import eu.epitech.croucour.footify.Entities.UserEntity;
 
 public interface IHomeView {
 
-    void startScan();
-
     void setBabyFoot(BabyFootEntity babyFootEntity);
 
     void setPubs(PubEntity pubEntity);
@@ -27,4 +25,8 @@ public interface IHomeView {
     void startProfileActivity(FriendEntity friendEntity);
 
     void setGameEntities(List<GameEntity> gameEntities);
+
+    void getPubAndShow(String id);
+
+    void startPubActivity(PubEntity pubEntity);
 }

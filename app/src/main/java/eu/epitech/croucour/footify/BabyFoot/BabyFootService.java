@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.epitech.croucour.footify.DAO.Manager;
+import eu.epitech.croucour.footify.Entities.BabyFootEntity;
 import eu.epitech.croucour.footify.Entities.FriendEntity;
 import eu.epitech.croucour.footify.Entities.GameEntity;
 import eu.epitech.croucour.footify.Entities.LigueRankingEntity;
+import eu.epitech.croucour.footify.Entities.PubEntity;
 import eu.epitech.croucour.footify.Entities.TeamEntity;
 import eu.epitech.croucour.footify.Entities.TokenEntity;
 import eu.epitech.croucour.footify.ServiceGeneratorApi;
@@ -25,6 +27,7 @@ public class BabyFootService {
 
     private final IBabyFootView _view;
     private final IBabyFootService _api;
+    private IBabyFootService _apiBasic;
 
     interface IBabyFootService {
         @Headers("Content-Type: application/json")
@@ -34,12 +37,21 @@ public class BabyFootService {
         @Headers("Content-Type: application/json")
         @GET("/{babyFoot_id}")
         Call<List<LigueRankingEntity>> getRanking(@Path("babyFoot_id") String babyFootEntity_id);
+
+        @Headers("Content-Type: application/json")
+        @GET("babyfoots/{babyFoot_id}")
+        Call<BabyFootEntity> getBabyFoot(@Path("babyFoot_id") String babyFoot_id);
+
+        @Headers("Content-Type: application/json")
+        @GET("pubs/{pub_id}")
+        Call<PubEntity> getPubs(@Path("pub_id") String bar_id);
     }
 
     BabyFootService(IBabyFootView view, Manager manager, TokenEntity tokenEntity) {
         this._view = view;
 
         this._api = ServiceGeneratorApi.createService(IBabyFootService.class, "api", tokenEntity, manager);
+        this._apiBasic = ServiceGeneratorApi.createService(IBabyFootService.class, "api", manager);
     }
 
     public void getHistoric(String babyFootEntity_id) {
@@ -120,7 +132,7 @@ public class BabyFootService {
     }
 
     public void getRanking(String babyFootEntity_id) {
-        Call<List<LigueRankingEntity>> call = _api.getRanking(babyFootEntity_id);
+        Call<List<LigueRankingEntity>> call = _apiBasic.getRanking(babyFootEntity_id);
         call.enqueue(new Callback<List<LigueRankingEntity>>() {
             @Override
             public void onResponse(Call<List<LigueRankingEntity>> call, Response<List<LigueRankingEntity>> response) {
@@ -136,6 +148,50 @@ public class BabyFootService {
 
             @Override
             public void onFailure(Call<List<LigueRankingEntity>> call, Throwable t) {
+            }
+        });
+    }
+
+    public void getBabyFoot(String babyFootId) {
+        Call<BabyFootEntity> call = _apiBasic.getBabyFoot(babyFootId);
+        call.enqueue(new Callback<BabyFootEntity>() {
+            @Override
+            public void onResponse(Call<BabyFootEntity> call, Response<BabyFootEntity> response) {
+
+                if (!response.isSuccessful()) {
+
+                }
+                else {
+                    BabyFootEntity babyFootEntity = response.body();
+                    _view.setBabyFoot(babyFootEntity);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<BabyFootEntity> call, Throwable t) {
+            }
+        });
+    }
+
+    public void getPub(String bar_id) {
+        Call<PubEntity> call = _apiBasic.getPubs(bar_id);
+        call.enqueue(new Callback<PubEntity>() {
+            @Override
+            public void onResponse(Call<PubEntity> call, Response<PubEntity> response) {
+
+                if (!response.isSuccessful()) {
+
+                }
+                else {
+                    PubEntity pubEntity = response.body();
+                    _view.setPub(pubEntity);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<PubEntity> call, Throwable t) {
             }
         });
     }

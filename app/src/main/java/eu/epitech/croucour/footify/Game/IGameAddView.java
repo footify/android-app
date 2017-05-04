@@ -1,5 +1,7 @@
 package eu.epitech.croucour.footify.Game;
 
+import eu.epitech.croucour.footify.Entities.BabyFootEntity;
+
 /**
  * Created by roucou_c on 16/12/2016.
  */
@@ -31,4 +33,9 @@ public interface IGameAddView {
     void setErrorTeam2User2(int resId);
 
     void setErrorTeam2Score(int resId);
+
+    void setErrorPseudoNotExist(String pseudo);
+
+    BabyFootEntity getBabyFootEntity();
+
 }

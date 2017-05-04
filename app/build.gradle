@@ -53,5 +53,6 @@ dependencies {
     }
     compile 'com.afollestad.material-dialogs:core:0.9.4.4'
 
+    compile 'com.google.android.gms:play-services-maps:10.2.4'
 }
 

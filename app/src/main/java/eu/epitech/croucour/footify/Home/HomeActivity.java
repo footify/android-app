@@ -76,8 +76,6 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, Naviga
     private Manager _manager;
     private UserEntity _userEntity;
     private HomePresenter _homePresenter;
-    private TabLayout _tabLayout;
-    private ViewPager _viewPager;
     private Toolbar _toolbar;
     private DrawerLayout _drawerLayout;
     private ActionBarDrawerToggle _drawerToggle;
@@ -205,34 +203,6 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, Naviga
         if (babyFootId != null) {
             _homePresenter.getBabyFoot(babyFootId);
         }
-
-
-
-
-//        _babyFootEntity = new BabyFootEntity();
-//        _babyFootEntity.set_id("40");
-//        _babyFootEntity.set_bar_id("42");
-//        _babyFootEntity.set_manufacturer("manufacturer");
-//        _babyFootEntity.set_picture_url("http://www.vistesreves.fr/wp-content/uploads/2014/03/babyfoot-bar-soiree-anniversaire-300x191.png");
-//        _babyFootEntity.set_name("nom du baby");
-//        PubEntity pubEntity = new PubEntity();
-//        pubEntity.set_id("42");
-//        pubEntity.set_name("mauri7");
-//        pubEntity.set_city("Paris");
-//        pubEntity.set_country("france");
-//        pubEntity.set_open_at("18h");
-//        pubEntity.set_close_at("03h");
-//        pubEntity.set_street_name("la fayette");
-//        pubEntity.set_street_number("196");
-//        pubEntity.set_zip_code("75010");
-//        pubEntity.set_googleId("ChIJdYgD0RNu5kcRv9AqdX6wN54");
-//        setPubs(pubEntity);
-
-//        Intent intent = new Intent(this, BabyFootActivity.class);
-//        intent.putExtra("babyFootEntity", _babyFootEntity);
-//        intent.putExtra("pubEntity", _pubEntity);
-//        startActivity(intent);
-
     }
 
     @Override
@@ -323,18 +293,10 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, Naviga
         }
     }
 
-    @Override
-    public void startScan() {
-        Intent intent = new Intent(HomeActivity.this, DecoderQrCodeActivity.class);
-        startActivity(intent);
-    }
-
     public void setHeaderNavigation(UserEntity userEntity) {
         TextView name = (TextView) _navigation.getHeaderView(0).findViewById(R.id.user_profile_name);
         TextView pseudo = (TextView) _navigation.getHeaderView(0).findViewById(R.id.user_profile_pseudo);
         final ImageView profile = (ImageView) _navigation.getHeaderView(0).findViewById(R.id.photo_profile);
-
-        String url_profile = "https://spred.tv/img/profile.jpg";
 
         if (userEntity != null){
             if (name != null && pseudo != null) {
@@ -342,12 +304,9 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, Naviga
                 pseudo.setText("@" + userEntity.get_pseudo());
             }
 
-            String url = _userEntity.get_picture_url().contains("http") ? _userEntity.get_picture_url() : "https://"+ ServiceGeneratorApi.API_BASE_URL+_userEntity.get_picture_url();
-
-            url_profile = url;
+            String url_profile = userEntity.get_picture_url();
+            this.getImageProfile(url_profile, profile);
         }
-
-        this.getImageProfile(url_profile, profile);
     }
 
     @Override
@@ -398,13 +357,24 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, Naviga
     @Override
     public void getUserAndShow(String user_id) {
         _homePresenter.getUserAndShow(user_id);
+    }
 
+    @Override
+    public void getPubAndShow(String pub_id) {
+        _homePresenter.getPubAndShow(pub_id);
     }
 
     @Override
     public void startProfileActivity(FriendEntity friendEntity) {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("friendEntity", friendEntity);
+        this.startActivity(intent);
+    }
+
+    @Override
+    public void startPubActivity(PubEntity pubEntity) {
+        Intent intent = new Intent(this, PubActivity.class);
+        intent.putExtra("pubEntity", pubEntity);
         this.startActivity(intent);
     }
 

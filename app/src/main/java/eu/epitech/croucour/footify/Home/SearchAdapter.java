@@ -51,14 +51,8 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
             String url = null;
             String tag = null;
             switch (type) {
-                case "cast":
-                    url = json.getString("url");
-//                    holder.type.setBackgroundColor(_context.getColor(R.color.cast));
-                    break;
-                case "tag":
-                    tag = json.getString("name");
-                    tag = tag.replace("#", "");
-//                    holder.type.setBackgroundColor(_context.getColor(R.color.tag));
+                case "pub":
+                    holder.type.setBackgroundColor(_context.getColor(R.color.greeen));
                     break;
                 case "user":
                     holder.type.setBackgroundColor(_context.getColor(R.color.orange));
@@ -72,11 +66,8 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
                 @Override
                 public void onClick(View view) {
                     switch (type) {
-                        case "cast":
-//                            _ipubView.getSpredCastsAndShow(finalUrl);
-                            break;
-                        case "tag":
-//                            _ipubView.startSpredCastByTagActivity(finalTag);
+                        case "pub":
+                            _iHomeView.getPubAndShow(id);
                             break;
                         case "user":
                             _iHomeView.getUserAndShow(id);

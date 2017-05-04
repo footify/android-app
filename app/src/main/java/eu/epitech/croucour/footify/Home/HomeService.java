@@ -30,8 +30,6 @@ public class HomeService {
     private final TokenEntity _tokenEntity;
     private final IHomeService _apiBasic;
 
-
-
     interface IHomeService {
         @Headers("Content-Type: application/json")
         @GET("pubs/{pub_id}")
@@ -81,10 +79,6 @@ public class HomeService {
             public void onFailure(Call<BabyFootEntity> call, Throwable t) {
             }
         });
-
-        BabyFootEntity babyFootEntity = new BabyFootEntity();
-        babyFootEntity.set_bar_id(babyFootId);
-        _view.setBabyFoot(babyFootEntity);
     }
 
     public void getPubs(String bar_id) {
@@ -229,4 +223,27 @@ public class HomeService {
         gameEntities.add(gameEntity);
         _view.setGameEntities(gameEntities);
     }
+
+    public void getPubAndShow(String pub_id) {
+        Call<PubEntity> call = _apiBasic.getPubs(pub_id);
+        call.enqueue(new Callback<PubEntity>() {
+            @Override
+            public void onResponse(Call<PubEntity> call, Response<PubEntity> response) {
+
+                if (!response.isSuccessful()) {
+
+                }
+                else {
+                    PubEntity pubEntity = response.body();
+                    _view.startPubActivity(pubEntity);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<PubEntity> call, Throwable t) {
+            }
+        });
+    }
+
 }

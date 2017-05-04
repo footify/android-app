@@ -12,8 +12,8 @@ import java.util.List;
 public class PubEntity implements Serializable{
     @SerializedName("id")
     private String _id = null;
-    @SerializedName("googleId")
-    private String _googleId = null;
+    @SerializedName("picture_url")
+    private String _picture_url = null;
     @SerializedName("name")
     private String _name = null;
     @SerializedName("street_number")
@@ -45,12 +45,12 @@ public class PubEntity implements Serializable{
         this._id = _id;
     }
 
-    public String get_googleId() {
-        return _googleId;
+    public String get_picture_url() {
+        return _picture_url;
     }
 
-    public void set_googleId(String _googleId) {
-        this._googleId = _googleId;
+    public void set_picture_url(String _picture_url) {
+        this._picture_url = _picture_url;
     }
 
     public String get_name() {
