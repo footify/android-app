@@ -87,23 +87,6 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
 
         _babyFootPresenter = new BabyFootPresenter(this, _manager, tokenEntity);
 
-//        _tabLayout = (TabLayout) findViewById(R.id.tabs);
-//        _viewPager = (ViewPager) findViewById(R.id.viewpager);
-//
-//        _viewPagerAdapter = new ViewPagerBabyFootAdapter(getSupportFragmentManager());
-//        _viewPagerAdapter.addTab(ViewPagerBabyFootAdapter.TabFragment.newInstance("1", this, this, this), "BabyFoot");
-//        _viewPagerAdapter.addTab(ViewPagerBabyFootAdapter.TabFragment.newInstance("2", this, this, this), "Classement");
-//
-//        _viewPager.setOffscreenPageLimit(2);
-//
-//        _viewPager.setAdapter(_viewPagerAdapter);
-//
-//        _tabLayout.setupWithViewPager(_viewPager);
-
-//        ViewPagerBabyFootAdapter.TabFragment  fragment = _viewPagerAdapter.getItem(0);
-//        fragment.setBabyFoot(_babyFootEntity);
-//        fragment.setPub(_pubEntity);
-
         _babyfoot_name = (TextView) findViewById(R.id.babyfoot_name);
         _babyfoot_manufacter = (TextView) findViewById(R.id.babyfoot_manufacturer);
         _babyfoot_picture = (ImageView) findViewById(R.id.babyfoot_photo);
@@ -166,8 +149,8 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
     @Override
     protected void onResume() {
         super.onResume();
-
         _babyFootPresenter.getBabyFoot(_babyFootEntity.get_id());
+        _babyFootPresenter.getHistoric(_babyFootEntity.get_id());
     }
 
     @Override

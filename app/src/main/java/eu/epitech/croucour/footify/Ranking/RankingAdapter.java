@@ -46,7 +46,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.MyViewHo
         TeamEntity teamEntity = ligueRankingEntity.get_team();
 
         holder._ranking_position.setText(String.valueOf(position + 1));
-        holder._ranking_team.setText(teamEntity.get_players().get(0)+" & "+teamEntity.get_players().get(1));
+        holder._ranking_team.setText(teamEntity.get_players().get(0).get_pseudo()+" & "+teamEntity.get_players().get(1).get_pseudo());
         holder._ranking_points.setText(String.valueOf(ligueRankingEntity.get_point()));
     }
 

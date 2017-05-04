@@ -46,19 +46,20 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
         try {
             JSONObject json = new JSONObject(string);
             final String id = json.getString("id");
-            holder.name.setText(json.getString("name"));
             final String type = json.getString("type");
+            holder.name.setText(json.getString("name"));
             String url = null;
             String tag = null;
             switch (type) {
                 case "pub":
+                    holder.type.setText(R.string.PubTag);
                     holder.type.setBackgroundColor(_context.getColor(R.color.greeen));
                     break;
                 case "user":
+                    holder.type.setText(R.string.userTag);
                     holder.type.setBackgroundColor(_context.getColor(R.color.orange));
                     break;
             }
-            holder.type.setText(type);
 
             final String finalUrl = url;
             final String finalTag = tag;
