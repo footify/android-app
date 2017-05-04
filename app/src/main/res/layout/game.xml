@@ -42,7 +42,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Equipe bleu"
+                            android:text="Equipe Bleu"
                             android:textSize="30dp" />
 
                         <View
@@ -71,7 +71,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.1"
-                                android:hint="saisissez un pseudo"
+                                android:hint="Saisissez le pseudo d'un joueur"
                                 app:met_floatingLabel="highlight"
                                 app:met_singleLineEllipsis="true" />
 
@@ -95,7 +95,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.1"
-                                android:hint="saisissez un pseudo"
+                                android:hint="Saisissez le pseudo d'un joueur"
                                 app:met_floatingLabel="highlight"
                                 app:met_singleLineEllipsis="true" />
 
@@ -150,7 +150,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.1"
-                                android:hint="saisissez un pseudo"
+                                android:hint="Saisissez le pseudo d'un joueur"
                                 app:met_floatingLabel="highlight"
                                 app:met_singleLineEllipsis="true" />
 
@@ -174,7 +174,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.1"
-                                android:hint="saisissez un pseudo"
+                                android:hint="Saisissez le pseudo d'un joueur"
                                 app:met_floatingLabel="highlight"
                                 app:met_singleLineEllipsis="true" />
 
@@ -202,7 +202,7 @@
                             android:id="@+id/babyfoot_pub_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Résultats"
+                            android:text="Résultat"
                             android:textSize="30dp" />
 
                         <View
@@ -228,13 +228,13 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center|center_horizontal"
-                                    android:text="Equipe bleue" />
+                                    android:text="Equipe Bleue" />
 
                                 <com.rengwuxian.materialedittext.MaterialEditText
                                     android:id="@+id/game_add_team1_score"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="score"
+                                    android:hint="Score"
                                     android:ems="1"
                                     android:maxLength="2"
                                     android:inputType="numberSigned"
@@ -274,7 +274,7 @@
                                     android:ems="1"
                                     android:maxLength="2"
                                     android:inputType="numberSigned"
-                                    android:hint="score"
+                                    android:hint="Score"
                                     app:met_floatingLabel="highlight"
                                     app:met_singleLineEllipsis="true" />
 
