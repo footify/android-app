@@ -13,9 +13,9 @@ public class GameEntity implements Serializable{
     @SerializedName("id")
     private String _id = null;
     @SerializedName("babyfoot_id")
-    private List<String> _babyfoot_id = null;
+    private String _babyfoot_id = null;
     @SerializedName("teams")
-    private List<String> _teams = null;
+    private List<TeamEntity> _teams = null;
     @SerializedName("winner")
     private String _winner = null;
     @SerializedName("scores")
@@ -37,19 +37,19 @@ public class GameEntity implements Serializable{
         this._id = _id;
     }
 
-    public List<String> get_babyfoot_id() {
+    public String get_babyfoot_id() {
         return _babyfoot_id;
     }
 
-    public void set_babyfoot_id(List<String> _babyfoot_id) {
+    public void set_babyfoot_id(String _babyfoot_id) {
         this._babyfoot_id = _babyfoot_id;
     }
 
-    public List<String> get_teams() {
+    public List<TeamEntity> get_teams() {
         return _teams;
     }
 
-    public void set_teams(List<String> _teams) {
+    public void set_teams(List<TeamEntity> _teams) {
         this._teams = _teams;
     }
 

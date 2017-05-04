@@ -12,8 +12,8 @@ import java.util.List;
 public class TeamEntity implements Serializable{
     @SerializedName("id")
     private String _id = null;
-    @SerializedName("players_id")
-    private List<String> _players_id = null;
+    @SerializedName("players")
+    private List<FriendEntity> _players = null;
     @SerializedName("created_at")
     private String _created_at = null;
     @SerializedName("updated_at")
@@ -27,12 +27,12 @@ public class TeamEntity implements Serializable{
         this._id = _id;
     }
 
-    public List<String> get_players_id() {
-        return _players_id;
+    public List<FriendEntity> get_players() {
+        return _players;
     }
 
-    public void set_players_id(List<String> _players_id) {
-        this._players_id = _players_id;
+    public void set_players(List<FriendEntity> _players) {
+        this._players = _players;
     }
 
     public String get_created_at() {

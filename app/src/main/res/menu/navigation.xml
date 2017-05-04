@@ -1,6 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_account2"
+        android:title="">
+        <menu>
+            <group android:checkableBehavior="all">
+            </group>
+        </menu>
+    </item>
+
+    <item
         android:id="@+id/navigation_account"
         android:title="Menu">
         <menu>
@@ -11,7 +20,7 @@
                     android:title="Profil"/>
                 <item
                     android:id="@+id/navigation_historic"
-                    android:title="SpredCast"/>
+                    android:title="Historique"/>
                 <item
                     android:id="@+id/navigation_logout"
                     android:title="Déconnexion"/>

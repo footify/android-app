@@ -6,4 +6,11 @@
     <color name="white">#fff</color>
 
     <color name="navbar_background">#3F51B5</color>
+
+    <color name="editText_line">#3F51B5</color>
+
+
+    <color name="orange">#FF9800</color>
+    <color name="red">#ff0000</color>
+    <color name="greeen">#4CAF50</color>
 </resources>

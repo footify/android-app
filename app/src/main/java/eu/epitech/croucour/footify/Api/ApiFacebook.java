@@ -8,7 +8,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -35,7 +34,6 @@ public class ApiFacebook {
     public void init() {
         FacebookSdk.sdkInitialize(_context);
 
-        AppEventsLogger.activateApp(_context);
     }
 
     public void launch() {

@@ -1,10 +1,12 @@
 package eu.epitech.croucour.footify.Home;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,39 +24,60 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
+import eu.epitech.croucour.footify.BabyFoot.BabyFootActivity;
 import eu.epitech.croucour.footify.DAO.Manager;
 import eu.epitech.croucour.footify.DecoderQrCode.DecoderQrCodeActivity;
+import eu.epitech.croucour.footify.Entities.BabyFootEntity;
+import eu.epitech.croucour.footify.Entities.FriendEntity;
+import eu.epitech.croucour.footify.Entities.GameEntity;
+import eu.epitech.croucour.footify.Entities.PubEntity;
+import eu.epitech.croucour.footify.Entities.TeamEntity;
 import eu.epitech.croucour.footify.Entities.TokenEntity;
 import eu.epitech.croucour.footify.Entities.UserEntity;
-import eu.epitech.croucour.footify.Home.TabLayout.ViewPagerAdapter;
+import eu.epitech.croucour.footify.Game.GameAdapter;
+import eu.epitech.croucour.footify.Game.IGameView;
+import eu.epitech.croucour.footify.Profile.ProfileActivity;
+import eu.epitech.croucour.footify.Pub.PubActivity;
 import eu.epitech.croucour.footify.R;
+import eu.epitech.croucour.footify.ServiceGeneratorApi;
+import eu.epitech.croucour.footify.SignInSignUp.SignInSignUpActivity;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by croucour on 29/04/17.
  */
 
-public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener, NavigationView.OnNavigationItemSelectedListener, MaterialSearchBar.OnSearchActionListener {
+public class HomeActivity extends AppCompatActivity implements IHomeView, NavigationView.OnNavigationItemSelectedListener, MaterialSearchBar.OnSearchActionListener, View.OnClickListener, IGameView {
 
     private Manager _manager;
     private UserEntity _userEntity;
     private HomePresenter _homePresenter;
     private TabLayout _tabLayout;
     private ViewPager _viewPager;
-    private ViewPagerAdapter _viewPagerAdapter;
     private Toolbar _toolbar;
     private DrawerLayout _drawerLayout;
     private ActionBarDrawerToggle _drawerToggle;
@@ -64,6 +88,11 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
     private MaterialSearchBar _searchBar;
     private Client _client;
     private CompletionHandler _completionHandler;
+    private BabyFootEntity _babyFootEntity;
+    private PubEntity _pubEntity;
+    private DisplayImageOptions _displayImageOptions;
+    private RecyclerView _game_historic_recycler_view;
+    private GameAdapter _game_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,27 +106,29 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
         if (tokenEntity == null) {
             _userEntity = null;
         }
-
         _homePresenter = new HomePresenter(this, _manager, tokenEntity);
 
-        _tabLayout = (TabLayout) findViewById(R.id.tabs);
-        _viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        _viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        _viewPagerAdapter.addTab(ViewPagerAdapter.TabFragment.newInstance("1", this), "En cours");
-        _viewPagerAdapter.addTab(ViewPagerAdapter.TabFragment.newInstance("2", this), "Historique");
-        _viewPagerAdapter.addTab(ViewPagerAdapter.TabFragment.newInstance("3", this), "Classement");
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatActionButton_scan);
 
-        _viewPager.setOffscreenPageLimit(3);
-
-        _viewPager.setAdapter(_viewPagerAdapter);
-
-        _tabLayout.setupWithViewPager(_viewPager);
+        floatingActionButton.setOnClickListener(this);
 
         initSearch();
 
+        _game_historic_recycler_view = (RecyclerView) findViewById(R.id.game_historic_recycler_view);
 
+        _game_adapter = new GameAdapter(getApplicationContext(), this);
+        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getApplicationContext());
+        _game_historic_recycler_view.setLayoutManager(mLayoutManager3);
+        _game_historic_recycler_view.setItemAnimator(new DefaultItemAnimator());
+        _game_historic_recycler_view.setAdapter(_game_adapter);
 
+        _homePresenter.getFriendHistoric();
+
+        _displayImageOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
     }
 
     private void initSearch() {
@@ -111,7 +142,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
         _searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
         _searchBar.setOnSearchActionListener(this);
 
-        _client = new Client("KGZYQKI2SD", "a8583e100dbd3bb6e5a64d76462d1f5b");
+        _client = new Client("OE27RXGRJS", "c2809c38f9e5ddfc6d71e38df80adce9");
 
         final Index index = _client.initIndex("global");
 
@@ -167,9 +198,41 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
     @Override
     protected void onResume() {
         super.onResume();
-//        _homePresenter.getAbo();
-//        _homePresenter.getSpredCasts(1);
-//        _homePresenter.getSpredCasts(0);
+
+        _homePresenter.getProfile();
+
+        String babyFootId = _manager._globalManager.select("babyFootSelected");
+        if (babyFootId != null) {
+            _homePresenter.getBabyFoot(babyFootId);
+        }
+
+
+
+
+//        _babyFootEntity = new BabyFootEntity();
+//        _babyFootEntity.set_id("40");
+//        _babyFootEntity.set_bar_id("42");
+//        _babyFootEntity.set_manufacturer("manufacturer");
+//        _babyFootEntity.set_picture_url("http://www.vistesreves.fr/wp-content/uploads/2014/03/babyfoot-bar-soiree-anniversaire-300x191.png");
+//        _babyFootEntity.set_name("nom du baby");
+//        PubEntity pubEntity = new PubEntity();
+//        pubEntity.set_id("42");
+//        pubEntity.set_name("mauri7");
+//        pubEntity.set_city("Paris");
+//        pubEntity.set_country("france");
+//        pubEntity.set_open_at("18h");
+//        pubEntity.set_close_at("03h");
+//        pubEntity.set_street_name("la fayette");
+//        pubEntity.set_street_number("196");
+//        pubEntity.set_zip_code("75010");
+//        pubEntity.set_googleId("ChIJdYgD0RNu5kcRv9AqdX6wN54");
+//        setPubs(pubEntity);
+
+//        Intent intent = new Intent(this, BabyFootActivity.class);
+//        intent.putExtra("babyFootEntity", _babyFootEntity);
+//        intent.putExtra("pubEntity", _pubEntity);
+//        startActivity(intent);
+
     }
 
     @Override
@@ -201,10 +264,11 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
 
             _navigation = (NavigationView) findViewById(R.id.navigation_view);
 
-            _navigation.getMenu().clear();
-            _navigation.inflateMenu(R.menu.navigation);
-            _navigation.setNavigationItemSelectedListener(this);
+            _navigation.inflateHeaderView(R.layout.navigation_header);
 
+            _navigation.inflateMenu(R.menu.navigation);
+
+            _navigation.setNavigationItemSelectedListener(this);
         }
     }
 
@@ -216,37 +280,28 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+
+        switch (item.getItemId()) {
+            case R.id.navigation_profile:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.navigation_logout:
+                _manager._tokenManager.delete();
+                this.finish();
+                Intent intent1 = new Intent(this, SignInSignUpActivity.class);
+                startActivity(intent1);
+                break;
+        }
+        return true;
     }
 
     @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        _viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (_drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -272,5 +327,129 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, ViewPa
     public void startScan() {
         Intent intent = new Intent(HomeActivity.this, DecoderQrCodeActivity.class);
         startActivity(intent);
+    }
+
+    public void setHeaderNavigation(UserEntity userEntity) {
+        TextView name = (TextView) _navigation.getHeaderView(0).findViewById(R.id.user_profile_name);
+        TextView pseudo = (TextView) _navigation.getHeaderView(0).findViewById(R.id.user_profile_pseudo);
+        final ImageView profile = (ImageView) _navigation.getHeaderView(0).findViewById(R.id.photo_profile);
+
+        String url_profile = "https://spred.tv/img/profile.jpg";
+
+        if (userEntity != null){
+            if (name != null && pseudo != null) {
+                name.setText(userEntity.get_last_name() + " " + userEntity.get_first_name());
+                pseudo.setText("@" + userEntity.get_pseudo());
+            }
+
+            String url = _userEntity.get_picture_url().contains("http") ? _userEntity.get_picture_url() : "https://"+ ServiceGeneratorApi.API_BASE_URL+_userEntity.get_picture_url();
+
+            url_profile = url;
+        }
+
+        this.getImageProfile(url_profile, profile);
+    }
+
+    @Override
+    public void setProfile(UserEntity userEntity) {
+        _userEntity = userEntity;
+        this.setHeaderNavigation(userEntity);
+        _navigation.getMenu().clear();
+        _navigation.inflateMenu(R.menu.navigation);
+        _navigation.setNavigationItemSelectedListener(this);
+    }
+
+    public void getImageProfile(String url, ImageView photo) {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .build();
+        ImageLoader.getInstance().init(config);
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
+        imageLoader.displayImage(url, photo, _displayImageOptions);
+    }
+
+
+    @Override
+    public void setBabyFoot(BabyFootEntity babyFootEntity) {
+        _babyFootEntity = babyFootEntity;
+        _homePresenter.getPub(babyFootEntity.get_bar_id());
+    }
+
+    @Override
+    public void setPubs(PubEntity pubEntity) {
+        _pubEntity = pubEntity;
+        Intent intent = new Intent(this, BabyFootActivity.class);
+        intent.putExtra("babyFootEntity", _babyFootEntity);
+        intent.putExtra("pubEntity", _pubEntity);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.floatActionButton_scan:
+                Intent intent = new Intent(this, DecoderQrCodeActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
+    public void getUserAndShow(String user_id) {
+        _homePresenter.getUserAndShow(user_id);
+
+    }
+
+    @Override
+    public void startProfileActivity(FriendEntity friendEntity) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("friendEntity", friendEntity);
+        this.startActivity(intent);
+    }
+
+    @Override
+    public void getHistoric(String babyFootEntity_id) {}
+
+    @Override
+    public void addGame(String babyFootEntity_id) {}
+
+    @Override
+    public void setGameEntities(List<GameEntity> gameEntities) {
+        if (!gameEntities.isEmpty()) {
+            TextView empty_view = (TextView) findViewById(R.id.empty_view);
+            empty_view.setVisibility(View.GONE);
+        }
+        _game_adapter.setGameEntities(gameEntities);
+    }
+
+    @Override
+    public void shareGame(GameEntity gameEntity) {
+
+        TeamEntity teamEntity = gameEntity.get_teams().get(0);
+        TeamEntity teamEntity2 = gameEntity.get_teams().get(1);
+
+        String winner;
+        String loser;
+
+        if (Objects.equals(gameEntity.get_winner(), teamEntity.get_id())) {
+            winner = teamEntity.get_players().get(0).get_pseudo()+" & "+teamEntity.get_players().get(1).get_pseudo();
+            loser = teamEntity2.get_players().get(0).get_pseudo()+" & "+teamEntity2.get_players().get(1).get_pseudo();
+        }
+        else {
+            loser = teamEntity.get_players().get(0).get_pseudo()+" & "+teamEntity.get_players().get(1).get_pseudo();
+            winner = teamEntity2.get_players().get(0).get_pseudo()+" & "+teamEntity2.get_players().get(1).get_pseudo();
+        }
+
+        String title = winner+" ont gagné contre "+loser;
+        String description = "La fin du match s'est fini avec le score de " + gameEntity.get_scores().get(0) + "-"+gameEntity.get_scores().get(1);
+
+
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentTitle(title)
+                .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                .setContentDescription(description)
+                .build();
+        ShareDialog.show(this, content);
     }
 }

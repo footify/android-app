@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">footify</string>
-    <string name="facebook_app_id">565509136962999</string>
+    <string name="facebook_app_id">517667988622906</string>
+    <string name="fb_login_protocol_scheme">fbAPP_ID</string>
+
+    <string name="profile_edit_lastname">Votre nom</string>
+    <string name="profile_edit_firstname">Votre prénom</string>
+    <string name="profile_edit_email">Votre email</string>
+    <string name="profile_edit_submit">Enregistrer</string>
+    <string name="pathProfile_external_api_login">Impossible de modifier l\'adresse email avec une connexion externe (google, facebook, ...)</string>
+    <string name="profile_edit_title">Modification de votre profil</string>
+    <string name="profile_title">Votre profil</string>
+
+
+
+    <string name="invalid_email">Email invalide</string>
+    <string name="empty_input">Veuillez remplir ce champs</string>
+    <string name="signup_pseudo">Votre pseudo</string>
+    <string name="signup2_submit">Valider</string>
+
+    <string name="pseudo_already_use">Ce pseudo est déjà utilisé</string>
+    <string name="email_already_use">Email déjà utilisé</string>
+
 </resources>

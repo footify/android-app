@@ -8,6 +8,8 @@ import com.rengwuxian.materialedittext.MaterialEditText;
  */
 public interface ISignInSignUpView {
 
+    void changeStep(String step);
+
     void setError(int resId);
 
     LoginButton getSignInButtonFacebook();
@@ -15,4 +17,6 @@ public interface ISignInSignUpView {
     void onFacebookClicked(String access_token_facebook);
 
     void signInSignUpSuccess();
+
+    void setErrorPseudo(int resId);
 }

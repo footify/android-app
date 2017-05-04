@@ -8,15 +8,19 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class BabyfootEntity implements Serializable{
+public class BabyFootEntity implements Serializable{
     @SerializedName("id")
     private String _id = null;
-    @SerializedName("bar_id")
+    @SerializedName("pub")
     private String _bar_id = null;
+    @SerializedName("name")
+    private String _name = null;
     @SerializedName("manufacturer")
     private String _manufacturer = null;
     @SerializedName("qr_code_url")
     private String _qr_code_url = null;
+    @SerializedName("picture_url")
+    private String _picture_url = null;
     @SerializedName("created_at")
     private String _created_at = null;
     @SerializedName("updated_at")
@@ -38,6 +42,14 @@ public class BabyfootEntity implements Serializable{
         this._bar_id = _bar_id;
     }
 
+    public String get_name() {
+        return _name;
+    }
+
+    public void set_name(String _name) {
+        this._name = _name;
+    }
+
     public String get_manufacturer() {
         return _manufacturer;
     }
@@ -52,6 +64,14 @@ public class BabyfootEntity implements Serializable{
 
     public void set_qr_code_url(String _qr_code_url) {
         this._qr_code_url = _qr_code_url;
+    }
+
+    public String get_picture_url() {
+        return _picture_url;
+    }
+
+    public void set_picture_url(String _picture_url) {
+        this._picture_url = _picture_url;
     }
 
     public String get_created_at() {

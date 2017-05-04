@@ -1,30 +1,23 @@
-package eu.epitech.croucour.footify.Home.TabLayout;
+package eu.epitech.croucour.footify.Pub.TabLayout;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.epitech.croucour.footify.Home.HomeActivity;
-import eu.epitech.croucour.footify.R;
+import eu.epitech.croucour.footify.Entities.PubEntity;
 import eu.epitech.croucour.footify.Home.IHomeView;
-import eu.epitech.croucour.footify.SignInSignUp.SignInSignUpActivity;
+import eu.epitech.croucour.footify.Pub.IPubView;
+import eu.epitech.croucour.footify.R;
 
 /**
  * Created by roucou_c on 21/09/2016.
@@ -60,7 +53,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public static class TabFragment extends Fragment implements View.OnClickListener {
 
         private String step;
-        public IHomeView _iHomeView;
+        public IPubView _iPubView;
 
         /**
          * Tab 1
@@ -68,12 +61,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         private CoordinatorLayout _coordinatorLayoutScan;
         private FloatingActionButton _floatingActionScan;
 
+        private TextView _tab1_name;
+        private PubEntity _pubEntity;
 
 
-        public static TabFragment newInstance(String step, IHomeView iHomeView) {
+        public static TabFragment newInstance(String step, IPubView ipubView) {
             TabFragment fragment = new TabFragment();
             fragment.step = step;
-            fragment._iHomeView = iHomeView;
+            fragment._iPubView = ipubView;
             return fragment;
         }
         @Override
@@ -90,17 +85,18 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 switch (step) {
                     case "1":
                         rootView = inflater.inflate(R.layout.tab_1, container, false);
-                        _coordinatorLayoutScan = (CoordinatorLayout) rootView.findViewById(R.id.tab_1_scan);
 
-                        _floatingActionScan = (FloatingActionButton) rootView.findViewById(R.id.floatActionButton_scan);
-                        _floatingActionScan.setOnClickListener(this);
+                        _tab1_name = (TextView) rootView.findViewById(R.id.tab_1_name);
 
+                        if (_pubEntity != null) {
+                            _tab1_name.setText(_pubEntity.get_name());
+                        }
                         break;
                     case "2":
-                        rootView = inflater.inflate(R.layout.tab_1, container, false);
+                        rootView = inflater.inflate(R.layout.tab_2, container, false);
                         break;
                     case "3":
-                        rootView = inflater.inflate(R.layout.tab_1, container, false);
+                        rootView = inflater.inflate(R.layout.tab_3, container, false);
                         break;
                 }
             }
@@ -110,13 +106,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.floatActionButton_scan:
-                    _iHomeView.startScan();
-                    break;
             }
 
         }
+
+        public void setPub(PubEntity pubEntity) {
+            _pubEntity = pubEntity;
+        }
     }
-
-
 }

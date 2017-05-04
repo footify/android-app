@@ -2,14 +2,15 @@ package eu.epitech.croucour.footify.Profile;
 
 import android.util.Patterns;
 
-import com.eip.roucou_c.spred.DAO.Manager;
-import com.eip.roucou_c.spred.Entities.TokenEntity;
-import com.eip.roucou_c.spred.Entities.UserEntity;
-import com.eip.roucou_c.spred.R;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.HashMap;
 import java.util.Objects;
+
+import eu.epitech.croucour.footify.DAO.Manager;
+import eu.epitech.croucour.footify.Entities.TokenEntity;
+import eu.epitech.croucour.footify.Entities.UserEntity;
+import eu.epitech.croucour.footify.R;
 
 /**
  * Created by roucou_c on 27/09/2016.
@@ -18,12 +19,12 @@ class ProfilePresenter {
 
     private final ProfileService _profileService;
     private final IProfileView _iProfileView;
-    private final IFollowersView _iFollowersView;
+    private final IFriendsView _iFiendsView;
 
-    ProfilePresenter(IProfileView view, IFollowersView iFollowersView, Manager manager, TokenEntity tokenEntity) {
+    ProfilePresenter(IProfileView view, IFriendsView iFiendsView, Manager manager, TokenEntity tokenEntity) {
         this._iProfileView = view;
-        this._iFollowersView = iFollowersView;
-        this._profileService = new ProfileService(view, iFollowersView, manager, tokenEntity);
+        this._iFiendsView = iFiendsView;
+        this._profileService = new ProfileService(view, iFiendsView, manager, tokenEntity);
     }
 
     void getProfile(boolean populate) {
@@ -90,10 +91,29 @@ class ProfilePresenter {
     }
 
     void getFollowing() {
-        _profileService.getFollowing();
+//        _profileService.getFollowing();
     }
 
-    void getFollowers() {
-        _profileService.getFollowers();
+    public void getFriendsList(String type_view) {
+        _profileService.getFriendsList(type_view);
+    }
+
+    public void deleteAnswer(String friend_id) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("user_id", friend_id);
+
+        _profileService.deleteAnswer(params);
+    }
+
+    public void deny(String friend_id) {
+        _profileService.deny(friend_id);
+    }
+
+    public void accept(String friend_id) {
+        _profileService.accept(friend_id);
+    }
+
+    public void addFriend(String friend_id) {
+        _profileService.addFriend(friend_id);
     }
 }

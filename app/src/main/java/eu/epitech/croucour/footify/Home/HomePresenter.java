@@ -18,4 +18,24 @@ public class HomePresenter {
         _manager = manager;
         _homeService = new HomeService(view, manager, tokenEntity);
     }
+
+    public void getBabyFoot(String babyFootId) {
+        _homeService.getBabyFoot(babyFootId);
+    }
+
+    public void getPub(String bar_id) {
+        _homeService.getPubs(bar_id);
+    }
+
+    public void getProfile() {
+        _homeService.getProfile();
+    }
+
+    public void getUserAndShow(String user_id) {
+        _homeService.getUserAndShow(user_id);
+    }
+
+    public void getFriendHistoric() {
+        _homeService.getFriendHistoric();
+    }
 }

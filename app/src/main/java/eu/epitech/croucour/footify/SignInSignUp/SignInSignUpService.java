@@ -1,15 +1,13 @@
 package eu.epitech.croucour.footify.SignInSignUp;
 
 
-import com.facebook.login.LoginManager;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import eu.epitech.croucour.footify.DAO.Manager;
 import eu.epitech.croucour.footify.Entities.TokenEntity;
 import eu.epitech.croucour.footify.Entities.UserEntity;
+import eu.epitech.croucour.footify.Interceptor.AuthInterceptor;
 import eu.epitech.croucour.footify.MyService;
 import eu.epitech.croucour.footify.R;
 import eu.epitech.croucour.footify.ServiceGeneratorApi;
@@ -27,11 +25,14 @@ public class SignInSignUpService extends MyService {
 
     private final ISignUpService _api;
 
-
     public interface ISignUpService {
         @Headers("Content-Type: application/json")
-        @POST("users")
-        Call<UserEntity> signUp(@Body Map<String, String> params);
+        @POST("auth/facebook-connect")
+        Call<TokenEntity> signInFacebook(@Body Map<String, String> params);
+
+        @Headers("Content-Type: application/json")
+        @POST("auth/facebook-register")
+        Call<UserEntity> signUpFacebook(@Body Map<String, String> params);
     }
 
     private final ISignInSignUpView _view;
@@ -39,64 +40,67 @@ public class SignInSignUpService extends MyService {
     public SignInSignUpService(ISignInSignUpView view, Manager manager) {
         super(manager);
         this._view = view;
-        this._api = ServiceGeneratorApi.createService(ISignUpService.class, "api", _manager);
-    }
-
-    public void signUp(final HashMap<String, String> userParams) {
-
-        Call call = _api.signUp(userParams);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
-                if (response.isSuccessful()) {
-                    String token = response.body();
-                    _manager._globalManager.addGlobal("token", token);
-//                    _view.signUpSuccess();
-                } else {
-//                    _view.setError(R.string.signup_error);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-            }
-        });
+        this._api = ServiceGeneratorApi.createService(ISignUpService.class, "login", _manager);
     }
 
     public String refreshTokenSync(TokenEntity tokenEntity) {
         return null;
     }
 
-    public void signInExternalApi(HashMap<String, String> params, String facebook) {
-//        Call call = _api.signInFacebook(params);
-//        call.enqueue(new Callback<TokenEntity>() {
-//            @Override
-//            public void onResponse(Call<TokenEntity> call, Response<TokenEntity> response) {
-//                if (response.isSuccessful()) {
-//                    signInOnResponse(response);
-//                }
-//                else {
-//                    ApiError apiError = new ApiError(response.errorBody(), response.code(), "signIn");
-//                    if (apiError.get_httpCode() == 404) {
-//                        _iSignInSignUpView.changeStep("step2");
-//                    }
-//                    else if (apiError.get_httpCode() == 403) {
-//                        _view.setError(apiError.get_target_message());
-//                        if (Objects.equals(api, "facebook")) {
-//                            LoginManager.getInstance().logOut();
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<TokenEntity> call, Throwable t) {
-//                //                if (t instanceof UnknownHostException){
-//                //                    signInWithoutConnexion();
-//                //                }
-//            }
-//        });
+    public void signInExternalApi(HashMap<String, String> params) {
+        Call call = _api.signInFacebook(params);
+        call.enqueue(new Callback<TokenEntity>() {
+            @Override
+            public void onResponse(Call<TokenEntity> call, Response<TokenEntity> response) {
+                if (response.isSuccessful()) {
+                    TokenEntity tokenEntity = response.body();
+
+                    if (tokenEntity != null) {
+                        AuthInterceptor.updateTokenExpire(tokenEntity);
+                        _manager._tokenManager.add(tokenEntity);
+                        _view.signInSignUpSuccess();
+                    }
+                }
+                else {
+                    if (response.code() == 404) {
+                        _view.changeStep("step2");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenEntity> call, Throwable t) {
+            }
+        });
+    }
+
+    public void signUpExternalApi(final HashMap<String, String> params) {
+        Call call = _api.signUpFacebook(params);
+        call.enqueue(new Callback<UserEntity>() {
+            @Override
+            public void onResponse(Call<UserEntity> call, Response<UserEntity> response) {
+
+                if (response.isSuccessful()) {
+                    UserEntity userEntity = response.body();
+
+                    if (userEntity != null) {
+                        signInExternalApi(params);
+                    }
+                }
+                else {
+                    if (response.code() == 409) {
+                        _view.setError(R.string.email_already_use);
+                    }
+                    else if (response.code() == 403) {
+                        _view.setErrorPseudo(R.string.pseudo_already_use);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserEntity> call, Throwable t) {
+            }
+
+        });
     }
 }

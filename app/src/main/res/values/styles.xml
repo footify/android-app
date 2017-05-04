@@ -13,4 +13,19 @@
         <item name="android:colorControlNormal">#fff</item>
 
     </style>
+
+    <style name="EditText">
+        <item name="met_floatingLabel">normal</item>
+        <item name="met_primaryColor">@color/editText_line</item>
+    </style>
+
+    <style name="SubmitButton">
+        <item name="fb_borderWidth">2dp</item>
+        <item name="fb_defaultColor">@color/navbar_background</item>
+        <item name="fb_focusColor">#8cc9f8</item>
+        <item name="fb_borderColor">#fff</item>
+        <item name="fb_radius">0dp</item>
+        <item name="fb_textColor">#fff</item>
+
+    </style>
 </resources>

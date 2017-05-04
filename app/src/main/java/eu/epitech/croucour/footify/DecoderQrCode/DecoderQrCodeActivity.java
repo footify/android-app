@@ -103,6 +103,8 @@ public class DecoderQrCodeActivity extends AppCompatActivity
         resultTextView.setText(text);
         pointsOverlayView.setPoints(points);
         Log.d("qrcode", text);
+        _manager._globalManager.addGlobal("babyFootSelected", text);
+        this.finish();
     }
 
     private void requestCameraPermission() {

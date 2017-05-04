@@ -17,6 +17,8 @@ public class UserEntity implements Serializable{
     private String _first_name = null;
     @SerializedName("last_name")
     private String _last_name = null;
+    @SerializedName("picture_url")
+    private String _picture_url = null;
     @SerializedName("pseudo")
     private String _pseudo = null;
     @SerializedName("created_at")
@@ -55,6 +57,14 @@ public class UserEntity implements Serializable{
 
     public void set_last_name(String _last_name) {
         this._last_name = _last_name;
+    }
+
+    public String get_picture_url() {
+        return _picture_url;
+    }
+
+    public void set_picture_url(String _picture_url) {
+        this._picture_url = _picture_url;
     }
 
     public String get_pseudo() {

@@ -49,7 +49,7 @@ public class TokenDAO{
         contentValues.put(ACCESS_TOKEN, tokenEntity.get_access_token());
         contentValues.put(REFRESH_TOKEN, tokenEntity.get_refresh_token());
         contentValues.put(EXPIRES_IN, tokenEntity.get_expire_in());
-        contentValues.put(TOKEN_TYPE, tokenEntity.get_token_type());
+        contentValues.put(TOKEN_TYPE, tokenEntity.get_type());
         contentValues.put(EXPIRE_ACCESS_TOKEN, tokenEntity.get_expire_access_token());
         contentValues.put(EXPIRE_REFRESH_TOKEN, tokenEntity.get_expire_refresh_token());
 
@@ -62,7 +62,7 @@ public class TokenDAO{
         contentValues.put(ACCESS_TOKEN, tokenEntity.get_access_token());
         contentValues.put(REFRESH_TOKEN, tokenEntity.get_refresh_token());
         contentValues.put(EXPIRES_IN, tokenEntity.get_expire_in());
-        contentValues.put(TOKEN_TYPE, tokenEntity.get_token_type());
+        contentValues.put(TOKEN_TYPE, tokenEntity.get_type());
         contentValues.put(EXPIRE_ACCESS_TOKEN, tokenEntity.get_expire_access_token());
         contentValues.put(EXPIRE_REFRESH_TOKEN, tokenEntity.get_expire_refresh_token());
 

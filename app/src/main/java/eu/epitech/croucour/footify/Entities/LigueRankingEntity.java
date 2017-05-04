@@ -14,8 +14,8 @@ public class LigueRankingEntity implements Serializable{
     private String _id = null;
     @SerializedName("ligue_id")
     private String _ligue_id = null;
-    @SerializedName("team_id")
-    private String _team_id = null;
+    @SerializedName("team")
+    private TeamEntity _team = null;
     @SerializedName("point")
     private Integer _point = null;
 
@@ -35,12 +35,12 @@ public class LigueRankingEntity implements Serializable{
         this._ligue_id = _ligue_id;
     }
 
-    public String get_team_id() {
-        return _team_id;
+    public TeamEntity get_team() {
+        return _team;
     }
 
-    public void set_team_id(String _team_id) {
-        this._team_id = _team_id;
+    public void set_team(TeamEntity _team) {
+        this._team = _team;
     }
 
     public Integer get_point() {

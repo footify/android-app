@@ -23,8 +23,8 @@ public class ServiceGeneratorApi {
 //    public final static String CLIENT = "dfbDgOnQjjqRgISU";
 //    public final static String SECRET = "eXmWuVBcoo6llNDUcvFf6pXaoJrjS6cu";
 
-    public final static String CLIENT = "iZzvsqXU2tO30A93";
-    public final static String SECRET = "YXZyjptxwhsiHdGKapbX6NpeoGz8YWDW";
+    public final static String CLIENT = "s51ZrR2cqmcX";
+    public final static String SECRET = "YCWjEKhMKYpRjvT2IFhm";
     public final static String PORT = ":80";
 
 

@@ -45,7 +45,7 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
         String string = _searchList.get(position);
         try {
             JSONObject json = new JSONObject(string);
-            final String objectID = json.getString("objectID");
+            final String id = json.getString("id");
             holder.name.setText(json.getString("name"));
             final String type = json.getString("type");
             String url = null;
@@ -61,7 +61,7 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 //                    holder.type.setBackgroundColor(_context.getColor(R.color.tag));
                     break;
                 case "user":
-//                    holder.type.setBackgroundColor(_context.getColor(R.color.user));
+                    holder.type.setBackgroundColor(_context.getColor(R.color.orange));
                     break;
             }
             holder.type.setText(type);
@@ -73,13 +73,13 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
                 public void onClick(View view) {
                     switch (type) {
                         case "cast":
-//                            _iHomeView.getSpredCastsAndShow(finalUrl);
+//                            _ipubView.getSpredCastsAndShow(finalUrl);
                             break;
                         case "tag":
-//                            _iHomeView.startSpredCastByTagActivity(finalTag);
+//                            _ipubView.startSpredCastByTagActivity(finalTag);
                             break;
                         case "user":
-//                            _iHomeView.getUserAndShow(objectID);
+                            _iHomeView.getUserAndShow(id);
                             break;
                     }
                 }
@@ -104,9 +104,9 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
         public MyViewHolder(View itemView) {
             super(itemView);
 
-//            name = (TextView) itemView.findViewById(R.id.search_name);
-//            type = (TextView) itemView.findViewById(R.id.search_type);
-//            search_linearLayout = (LinearLayout) itemView.findViewById(R.id.search_linearLayout);
+            name = (TextView) itemView.findViewById(R.id.search_name);
+            type = (TextView) itemView.findViewById(R.id.search_type);
+            search_linearLayout = (LinearLayout) itemView.findViewById(R.id.search_linearLayout);
         }
     }
 

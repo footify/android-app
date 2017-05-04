@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:titleTextAppearance="@style/ToolBarStyle"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/navbar_background"/>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/coordinatorLayout">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    app:contentPadding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Equipe bleu"
+                            android:textSize="30dp" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/navbar_background" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_vertical"
+                                android:layout_weight="1"
+                                android:text="1" />
+
+                            <com.rengwuxian.materialedittext.MaterialEditText
+                                android:id="@+id/game_add_team1_user1"
+                                style="@style/EditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.1"
+                                android:hint="saisissez un pseudo"
+                                app:met_floatingLabel="highlight"
+                                app:met_singleLineEllipsis="true" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_vertical"
+                                android:layout_weight="1"
+                                android:text="2" />
+
+                            <com.rengwuxian.materialedittext.MaterialEditText
+                                android:id="@+id/game_add_team1_user2"
+                                style="@style/EditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.1"
+                                android:hint="saisissez un pseudo"
+                                app:met_floatingLabel="highlight"
+                                app:met_singleLineEllipsis="true" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    app:contentPadding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Equipe Rouge"
+                            android:textSize="30dp" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/red" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_vertical"
+                                android:layout_weight="1"
+                                android:text="1" />
+
+                            <com.rengwuxian.materialedittext.MaterialEditText
+                                android:id="@+id/game_add_team2_user1"
+                                style="@style/EditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.1"
+                                android:hint="saisissez un pseudo"
+                                app:met_floatingLabel="highlight"
+                                app:met_singleLineEllipsis="true" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_vertical"
+                                android:layout_weight="1"
+                                android:text="2" />
+
+                            <com.rengwuxian.materialedittext.MaterialEditText
+                                android:id="@+id/game_add_team2_user2"
+                                style="@style/EditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.1"
+                                android:hint="saisissez un pseudo"
+                                app:met_floatingLabel="highlight"
+                                app:met_singleLineEllipsis="true" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/babyfoot_details_cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    app:contentPadding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/babyfoot_pub_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Résultats"
+                            android:textSize="30dp" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/greeen" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:weightSum="5">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1.5">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center|center_horizontal"
+                                    android:text="Equipe bleue" />
+
+                                <com.rengwuxian.materialedittext.MaterialEditText
+                                    android:id="@+id/game_add_team1_score"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="score"
+                                    android:ems="1"
+                                    android:maxLength="2"
+                                    android:inputType="numberSigned"
+                                    app:met_floatingLabel="highlight"
+                                    app:met_singleLineEllipsis="true" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_weight="2">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="VS"
+                                    android:gravity="center|center_vertical"/>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.5"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center|center_horizontal"
+                                    android:text="Equipe Rouge" />
+
+                                <com.rengwuxian.materialedittext.MaterialEditText
+                                    android:id="@+id/game_add_team2_score"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="1"
+                                    android:maxLength="2"
+                                    android:inputType="numberSigned"
+                                    android:hint="score"
+                                    app:met_floatingLabel="highlight"
+                                    app:met_singleLineEllipsis="true" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/game_add_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    fancy:fb_text="@string/signup2_submit"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="40dp"
+                    style="@style/SubmitButton"/>
+
+
+            </LinearLayout>
+        </ScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

@@ -1,5 +1,11 @@
 package eu.epitech.croucour.footify.Home;
 
+import java.util.List;
+
+import eu.epitech.croucour.footify.Entities.BabyFootEntity;
+import eu.epitech.croucour.footify.Entities.FriendEntity;
+import eu.epitech.croucour.footify.Entities.GameEntity;
+import eu.epitech.croucour.footify.Entities.PubEntity;
 import eu.epitech.croucour.footify.Entities.UserEntity;
 
 /**
@@ -9,4 +15,16 @@ import eu.epitech.croucour.footify.Entities.UserEntity;
 public interface IHomeView {
 
     void startScan();
+
+    void setBabyFoot(BabyFootEntity babyFootEntity);
+
+    void setPubs(PubEntity pubEntity);
+
+    void setProfile(UserEntity userEntity);
+
+    void getUserAndShow(String user_id);
+
+    void startProfileActivity(FriendEntity friendEntity);
+
+    void setGameEntities(List<GameEntity> gameEntities);
 }

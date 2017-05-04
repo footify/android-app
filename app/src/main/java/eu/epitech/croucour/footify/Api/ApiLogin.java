@@ -6,15 +6,12 @@ import android.util.Log;
 
 import eu.epitech.croucour.footify.SignInSignUp.ISignInSignUpView;
 
-import java.io.IOException;
-
 
 /**
  * Created by roucou_c on 17/06/2016.
  */
 public class ApiLogin {
 
-    static final int REQUEST_AUTHORIZATION = 42;
     static final int REQUEST_CODE_FACEBOOK = 64206;
 
     private final Context _context;
@@ -31,6 +28,7 @@ public class ApiLogin {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("result", String.valueOf(requestCode));
         if (requestCode == REQUEST_CODE_FACEBOOK){
             _apiFacebook.onActivityResult(requestCode, resultCode, data);
         }
