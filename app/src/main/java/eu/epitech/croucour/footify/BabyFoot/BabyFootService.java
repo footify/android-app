@@ -31,7 +31,7 @@ public class BabyFootService {
 
     interface IBabyFootService {
         @Headers("Content-Type: application/json")
-        @GET("/{babyFoot_id}")
+        @GET("babyfoots/{babyFoot_id}/feed")
         Call<List<GameEntity>> getHistoric(@Path("babyFoot_id") String babyFoot_id);
 
         @Headers("Content-Type: application/json")
@@ -55,13 +55,12 @@ public class BabyFootService {
     }
 
     public void getHistoric(String babyFootEntity_id) {
-        Call<List<GameEntity>> call = _api.getHistoric(babyFootEntity_id);
+        Call<List<GameEntity>> call = _apiBasic.getHistoric(babyFootEntity_id);
         call.enqueue(new Callback<List<GameEntity>>() {
             @Override
             public void onResponse(Call<List<GameEntity>> call, Response<List<GameEntity>> response) {
 
                 if (!response.isSuccessful()) {
-
                 }
                 else {
                     List<GameEntity> gameEntities = response.body();
@@ -74,60 +73,60 @@ public class BabyFootService {
             }
         });
 
-        List<GameEntity> gameEntities = new ArrayList<>();
-        GameEntity gameEntity = new GameEntity();
-        gameEntity.set_id("id");
-        gameEntity.set_babyfoot_id(babyFootEntity_id);
-
-        List<TeamEntity> teamEntities = new ArrayList<>();
-        TeamEntity teamEntityBleu = new TeamEntity();
-
-        teamEntityBleu.set_id("1");
-
-        List<FriendEntity> friendEntities = new ArrayList<>();
-
-        FriendEntity friendEntity = new FriendEntity();
-        friendEntity.set_pseudo("user1");
-        friendEntities.add(friendEntity);
-        FriendEntity friendEntity2 = new FriendEntity();
-        friendEntity2.set_pseudo("user2");
-        friendEntities.add(friendEntity2);
-
-        teamEntityBleu.set_players(friendEntities);
-
-        TeamEntity teamEntityRed = new TeamEntity();
-
-        teamEntityRed.set_id("2");
-
-        List<FriendEntity> friendEntities2 = new ArrayList<>();
-
-        FriendEntity friendEntity3 = new FriendEntity();
-        friendEntity3.set_pseudo("user3");
-        friendEntities2.add(friendEntity3);
-        FriendEntity friendEntity4 = new FriendEntity();
-        friendEntity4.set_pseudo("user4");
-        friendEntities2.add(friendEntity4);
-
-        teamEntityRed.set_players(friendEntities2);
-
-        teamEntities.add(teamEntityBleu);
-        teamEntities.add(teamEntityRed);
-        gameEntity.set_teams(teamEntities);
-
-        List<Integer> scrores = new ArrayList<>();
-        scrores.add(1);
-        scrores.add(2);
-        gameEntity.set_scores(scrores);
-
-        gameEntity.set_winner("2");
-
-        gameEntities.add(gameEntity);
-        gameEntities.add(gameEntity);
-        gameEntities.add(gameEntity);
-        gameEntities.add(gameEntity);
-        gameEntities.add(gameEntity);
-        gameEntities.add(gameEntity);
-        _view.setHistoric(gameEntities);
+//        List<GameEntity> gameEntities = new ArrayList<>();
+//        GameEntity gameEntity = new GameEntity();
+//        gameEntity.set_id("id");
+//        gameEntity.set_babyfoot_id(babyFootEntity_id);
+//
+//        List<TeamEntity> teamEntities = new ArrayList<>();
+//        TeamEntity teamEntityBleu = new TeamEntity();
+//
+//        teamEntityBleu.set_id("1");
+//
+//        List<FriendEntity> friendEntities = new ArrayList<>();
+//
+//        FriendEntity friendEntity = new FriendEntity();
+//        friendEntity.set_pseudo("user1");
+//        friendEntities.add(friendEntity);
+//        FriendEntity friendEntity2 = new FriendEntity();
+//        friendEntity2.set_pseudo("user2");
+//        friendEntities.add(friendEntity2);
+//
+//        teamEntityBleu.set_players(friendEntities);
+//
+//        TeamEntity teamEntityRed = new TeamEntity();
+//
+//        teamEntityRed.set_id("2");
+//
+//        List<FriendEntity> friendEntities2 = new ArrayList<>();
+//
+//        FriendEntity friendEntity3 = new FriendEntity();
+//        friendEntity3.set_pseudo("user3");
+//        friendEntities2.add(friendEntity3);
+//        FriendEntity friendEntity4 = new FriendEntity();
+//        friendEntity4.set_pseudo("user4");
+//        friendEntities2.add(friendEntity4);
+//
+//        teamEntityRed.set_players(friendEntities2);
+//
+//        teamEntities.add(teamEntityBleu);
+//        teamEntities.add(teamEntityRed);
+//        gameEntity.set_teams(teamEntities);
+//
+//        List<Integer> scrores = new ArrayList<>();
+//        scrores.add(1);
+//        scrores.add(2);
+//        gameEntity.set_scores(scrores);
+//
+//        gameEntity.set_winner("2");
+//
+//        gameEntities.add(gameEntity);
+//        gameEntities.add(gameEntity);
+//        gameEntities.add(gameEntity);
+//        gameEntities.add(gameEntity);
+//        gameEntities.add(gameEntity);
+//        gameEntities.add(gameEntity);
+//        _view.setHistoric(gameEntities);
 
     }
 

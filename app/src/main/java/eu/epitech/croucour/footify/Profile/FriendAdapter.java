@@ -53,6 +53,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
             holder._pseudo.setText(pseudo);
             String name = friendEntity.get_last_name()+" "+friendEntity.get_first_name();
             holder._name.setText(name);
+            _iFriendsView.setImage(friendEntity.get_picture_url(), holder._photo);
 
             String friend_type = null;
 

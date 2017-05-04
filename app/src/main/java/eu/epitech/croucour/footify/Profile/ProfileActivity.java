@@ -26,7 +26,6 @@ import eu.epitech.croucour.footify.Entities.FriendListEntity;
 import eu.epitech.croucour.footify.Entities.TokenEntity;
 import eu.epitech.croucour.footify.Entities.UserEntity;
 import eu.epitech.croucour.footify.R;
-import eu.epitech.croucour.footify.ServiceGeneratorApi;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
@@ -203,7 +202,7 @@ public class ProfileActivity extends AppCompatActivity implements IProfileView, 
             _profile_name_textView.setText(name);
             _profile_pseudo_textView.setText("@" + pseudo);
 
-            getImageProfile(picture_url, _profile_photo);
+            setImage(picture_url, _profile_photo);
         }
         else {
             _profile_add_friend.setVisibility(View.GONE);
@@ -381,7 +380,8 @@ public class ProfileActivity extends AppCompatActivity implements IProfileView, 
 //        _profile_nbFriends.setText(String.valueOf(nb));
 //    }
 
-    public void getImageProfile(String url, ImageView photo) {
+    @Override
+    public void setImage(String url, ImageView photo) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .build();
         ImageLoader.getInstance().init(config);

@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -86,6 +87,7 @@ public class ViewPagerBabyFootAdapter extends FragmentPagerAdapter {
         private RecyclerView _baby_ranking_recycler_view;
         private IRankingView _iRankingView;
         private RankingAdapter _ranking_adapter;
+        private SwipeRefreshLayout _historic_swipeRefreshLayout;
 
 
         public static TabFragment newInstance(String step, IBabyFootView iBabyFootView, IGameView iGameView, IRankingView iRankingView) {
@@ -138,6 +140,14 @@ public class ViewPagerBabyFootAdapter extends FragmentPagerAdapter {
                         _baby_historic_recycler_view.setLayoutManager(mLayoutManager3);
                         _baby_historic_recycler_view.setItemAnimator(new DefaultItemAnimator());
                         _baby_historic_recycler_view.setAdapter(_game_adapter);
+
+//                        _historic_swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+//                        _historic_swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//                            @Override
+//                            public void onRefresh() {
+//                                _iGameView.getHistoric(_pubEntity.get_id());
+//                            }
+//                        });
 
                         _game_floatingAction = (FloatingActionButton) rootView.findViewById(R.id.game_floatActionButton);
 

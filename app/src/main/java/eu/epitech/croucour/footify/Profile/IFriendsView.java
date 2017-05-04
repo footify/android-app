@@ -1,5 +1,7 @@
 package eu.epitech.croucour.footify.Profile;
 
+import android.widget.ImageView;
+
 import java.util.List;
 
 import eu.epitech.croucour.footify.Entities.FriendEntity;
@@ -12,4 +14,6 @@ interface IFriendsView {
     void setFriendList(FriendListEntity friendListEntity);
 
     void showDialog(String id, String type);
+
+    void setImage(String picture_url, ImageView photo);
 }

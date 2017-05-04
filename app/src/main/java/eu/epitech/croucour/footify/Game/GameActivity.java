@@ -199,4 +199,13 @@ public final class GameActivity extends AppCompatActivity implements IGameAddVie
     public BabyFootEntity getBabyFootEntity() {
         return _babyFootEntity;
     }
+
+    @Override
+    public void setError(int resId) {
+        if (_coordinatorLayout != null) {
+            Snackbar snackbar = Snackbar
+                    .make(_coordinatorLayout, resId, Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
+    }
 }

@@ -52,7 +52,7 @@ public class GameService extends MyService {
                     _view.finishAddGame();
                 }
                 else if (response.code() == 404){
-                    _view.setErrorPseudoNotExist("");
+                    _view.setError(R.string.add_game_error);
                 }
             }
 

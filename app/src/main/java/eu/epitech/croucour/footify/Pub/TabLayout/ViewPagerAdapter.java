@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -86,6 +87,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         private RecyclerView _pub_ranking_recycler_view;
         private RankingAdapter _ranking_adapter;
         private IRankingView _iRankingView;
+        private SwipeRefreshLayout _feeds_swipeRefreshLayout;
+        private SwipeRefreshLayout _ranking_swipeRefreshLayout;
 
 
         public static TabFragment newInstance(String step, IPubView ipubView, IGameView iGameView, IRankingView iRankingView) {
@@ -141,6 +144,16 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                         _feeds_recycler_view.setItemAnimator(new DefaultItemAnimator());
                         _feeds_recycler_view.setAdapter(_feeds_adapter);
 
+                        _feeds_swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+                        _feeds_swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                            @Override
+                            public void onRefresh() {
+                                _iGameView.getHistoric(_pubEntity.get_id());
+                                _feeds_swipeRefreshLayout.setRefreshing(false);
+                            }
+                        });
+
+
                         break;
                     case "3":
                         rootView = inflater.inflate(R.layout.ranking, container, false);
@@ -153,6 +166,15 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                         _pub_ranking_recycler_view.setItemAnimator(new DefaultItemAnimator());
                         _pub_ranking_recycler_view.setAdapter(_ranking_adapter);
 
+
+                        _ranking_swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+                        _ranking_swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                            @Override
+                            public void onRefresh() {
+                                _iRankingView.getRanking(_pubEntity.get_id());
+                                _ranking_swipeRefreshLayout.setRefreshing(false);
+                            }
+                        });
                         if (_pubEntity != null) {
                             _iRankingView.getRanking(_pubEntity.get_id());
                         }

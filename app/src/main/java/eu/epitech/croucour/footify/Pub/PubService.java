@@ -33,12 +33,12 @@ public class PubService {
         Call<List<BabyFootEntity>> getBabyFoots(@Path("pub_id") String bar_id);
 
         @Headers("Content-Type: application/json")
-        @GET("pubs/{pub_id}/feeds")
+        @GET("pubs/{pub_id}/feed")
         Call<List<GameEntity>> getFeeds(@Path("pub_id") String bar_id);
 
         @Headers("Content-Type: application/json")
-        @GET("pubs/{pub_id}/rankings")
-        Call<List<LigueRankingEntity>> getPubRanking(String pub_id);
+        @GET("pubs/{pub_id}/ranking")
+        Call<List<LigueRankingEntity>> getPubRanking(@Path("pub_id") String pub_id);
     }
 
     PubService(IPubView view, Manager manager, TokenEntity tokenEntity) {

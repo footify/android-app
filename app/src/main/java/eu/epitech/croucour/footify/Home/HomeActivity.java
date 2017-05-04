@@ -12,6 +12,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -71,7 +72,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by croucour on 29/04/17.
  */
 
-public class HomeActivity extends AppCompatActivity implements IHomeView, NavigationView.OnNavigationItemSelectedListener, MaterialSearchBar.OnSearchActionListener, View.OnClickListener, IGameView {
+public class HomeActivity extends AppCompatActivity implements IHomeView, NavigationView.OnNavigationItemSelectedListener, MaterialSearchBar.OnSearchActionListener, View.OnClickListener, IGameView, SwipeRefreshLayout.OnRefreshListener {
 
     private Manager _manager;
     private UserEntity _userEntity;
@@ -91,6 +92,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, Naviga
     private DisplayImageOptions _displayImageOptions;
     private RecyclerView _game_historic_recycler_view;
     private GameAdapter _game_adapter;
+    private SwipeRefreshLayout _swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +122,9 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, Naviga
         _game_historic_recycler_view.setLayoutManager(mLayoutManager3);
         _game_historic_recycler_view.setItemAnimator(new DefaultItemAnimator());
         _game_historic_recycler_view.setAdapter(_game_adapter);
+
+        _swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        _swipeRefreshLayout.setOnRefreshListener(this);
 
         _homePresenter.getFriendHistoric();
 
@@ -422,4 +427,16 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, Naviga
                 .build();
         ShareDialog.show(this, content);
     }
+
+    @Override
+    public void onRefresh() {
+        _homePresenter.getFriendHistoric();
+        _swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void cancelRefresh() {
+        _swipeRefreshLayout.setRefreshing(false);
+    }
+
 }

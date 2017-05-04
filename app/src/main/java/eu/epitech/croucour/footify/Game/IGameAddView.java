@@ -38,4 +38,5 @@ public interface IGameAddView {
 
     BabyFootEntity getBabyFootEntity();
 
+    void setError(int redId);
 }

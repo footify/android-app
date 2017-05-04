@@ -154,6 +154,7 @@ public class HomeService {
 //            public void onResponse(Call<List<GameEntity>> call, Response<List<GameEntity>> response) {
 //
 //                if (!response.isSuccessful()) {
+//        _view.cancelRefresh();
 //
 //                }
 //                else {

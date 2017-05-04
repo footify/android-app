@@ -7,7 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
@@ -20,7 +19,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import java.util.List;
 import java.util.Objects;
 
-import eu.epitech.croucour.footify.BabyFoot.TabLayout.ViewPagerBabyFootAdapter;
 import eu.epitech.croucour.footify.DAO.Manager;
 import eu.epitech.croucour.footify.Entities.BabyFootEntity;
 import eu.epitech.croucour.footify.Entities.GameEntity;
@@ -84,6 +82,11 @@ public class PubActivity extends AppCompatActivity implements IPubView, ViewPage
 
         ViewPagerAdapter.TabFragment  fragment = _viewPagerAdapter.getItem(0);
         fragment.setPub(_pubEntity);
+        fragment = _viewPagerAdapter.getItem(1);
+        fragment.setPub(_pubEntity);
+        fragment = _viewPagerAdapter.getItem(2);
+        fragment.setPub(_pubEntity);
+
     }
 
     @Override
@@ -102,7 +105,7 @@ public class PubActivity extends AppCompatActivity implements IPubView, ViewPage
         super.onResume();
         _pubPresenter.getBabyFoots(_pubEntity.get_id());
         _pubPresenter.getHistoric(_pubEntity.get_id());
-        // get classement
+        _pubPresenter.getPubRanking(_pubEntity.get_id());
     }
 
     @Override
@@ -184,7 +187,9 @@ public class PubActivity extends AppCompatActivity implements IPubView, ViewPage
     }
 
     @Override
-    public void getHistoric(String babyFootEntity_id) {}
+    public void getHistoric(String pub_id) {
+        _pubPresenter.getHistoric(pub_id);
+    }
 
     @Override
     public void addGame(String babyFootEntity_id) {}
@@ -217,6 +222,9 @@ public class PubActivity extends AppCompatActivity implements IPubView, ViewPage
                 .build();
         ShareDialog.show(this, content);
     }
+
+    @Override
+    public void cancelRefresh() {}
 
     @Override
     public void getRanking(String pub_id) {

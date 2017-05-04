@@ -12,4 +12,6 @@ public interface IGameView {
     void addGame(String babyFootEntity_id);
 
     void shareGame(GameEntity gameEntity);
+
+    void cancelRefresh();
 }

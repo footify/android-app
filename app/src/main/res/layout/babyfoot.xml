@@ -13,6 +13,11 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/navbar_background"/>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -169,4 +174,5 @@
             android:id="@+id/game_floatActionButton"/>
 
     </android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

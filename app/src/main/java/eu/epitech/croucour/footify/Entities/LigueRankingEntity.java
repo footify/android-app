@@ -12,7 +12,7 @@ import java.util.List;
 public class LigueRankingEntity implements Serializable{
     @SerializedName("id")
     private String _id = null;
-    @SerializedName("ligue_id")
+    @SerializedName("league")
     private String _ligue_id = null;
     @SerializedName("team")
     private TeamEntity _team = null;

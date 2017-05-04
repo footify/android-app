@@ -29,4 +29,6 @@ public interface IHomeView {
     void getPubAndShow(String id);
 
     void startPubActivity(PubEntity pubEntity);
+
+    void cancelRefresh();
 }

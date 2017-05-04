@@ -7,6 +7,7 @@ import android.support.annotation.LayoutRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,7 +46,7 @@ import eu.epitech.croucour.footify.Ranking.IRankingView;
  * Created by croucour on 29/04/17.
  */
 
-public class BabyFootActivity extends AppCompatActivity implements IBabyFootView, ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener, IGameView, IRankingView {
+public class BabyFootActivity extends AppCompatActivity implements IBabyFootView, ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener, IGameView, IRankingView , SwipeRefreshLayout.OnRefreshListener{
 
 
     private Manager _manager;
@@ -64,6 +65,7 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
     private RecyclerView _baby_historic_recycler_view;
     private GameAdapter _game_adapter;
     private FloatingActionButton _game_floatingAction;
+    private SwipeRefreshLayout _swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +119,9 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
         _baby_historic_recycler_view.setAdapter(_game_adapter);
 
         _game_floatingAction = (FloatingActionButton) findViewById(R.id.game_floatActionButton);
+
+        _swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        _swipeRefreshLayout.setOnRefreshListener(this);
 
         _game_floatingAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,4 +311,16 @@ public class BabyFootActivity extends AppCompatActivity implements IBabyFootView
         intent.putExtra("pubEntity", _pubEntity);
         startActivity(intent);
     }
+
+    @Override
+    public void onRefresh() {
+        _babyFootPresenter.getHistoric(_babyFootEntity.get_id());
+        _swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void cancelRefresh() {
+        _swipeRefreshLayout.setRefreshing(false);
+    }
+
 }

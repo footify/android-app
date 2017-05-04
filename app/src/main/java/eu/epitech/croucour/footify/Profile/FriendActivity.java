@@ -10,9 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,7 @@ public class FriendActivity extends AppCompatActivity implements IFriendsView {
     private RecyclerView _profile_followers_recycler_view;
     private FriendAdapter _profile_friends_adapter;
     private Toolbar _toolbar;
+    private DisplayImageOptions _displayImageOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,10 @@ public class FriendActivity extends AppCompatActivity implements IFriendsView {
         _profile_followers_recycler_view.setItemAnimator(new DefaultItemAnimator());
         _profile_followers_recycler_view.setAdapter(_profile_friends_adapter);
 
+        _displayImageOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
         _profilePresenter.getFriendsList("friendList");
     }
 
@@ -149,5 +158,16 @@ public class FriendActivity extends AppCompatActivity implements IFriendsView {
                     })
                     .show();
         }
+    }
+
+    @Override
+    public void setImage(String picture_url, ImageView imageView) {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .build();
+        ImageLoader.getInstance().init(config);
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
+        imageLoader.displayImage(picture_url, imageView, _displayImageOptions);
     }
 }
