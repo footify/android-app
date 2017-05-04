@@ -285,17 +285,24 @@
 
                 </android.support.v7.widget.CardView>
 
-                <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/game_add_submit"
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    fancy:fb_text="@string/signup2_submit"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="40dp"
-                    style="@style/SubmitButton"/>
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    app:contentPadding="15dp">
 
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@+id/game_add_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        fancy:fb_text="@string/signup2_submit"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp"
+                        style="@style/SubmitButton"/>
+                </android.support.v7.widget.CardView>
 
             </LinearLayout>
         </ScrollView>
