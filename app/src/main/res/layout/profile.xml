@@ -114,7 +114,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="76dp"
-                    android:text="Roucour Clément toto"
                     android:textColor="#fff"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -126,7 +125,6 @@
                     android:layout_below="@+id/profile_name_textView"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
-                    android:text="\@roucou_c toto"
                     android:textColor="#fff"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -147,7 +145,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email :"
+                    android:text="Email: "
                     android:layout_marginEnd="20dp"/>
 
                 <TextView
@@ -156,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:background="#fff"
                     android:id="@+id/profile_email_textView"
-                    android:text="clement.roucour@gmail.com toto" />
+                    android:text="" />
             </LinearLayout>
 
         </RelativeLayout>

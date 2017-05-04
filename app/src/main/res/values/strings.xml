@@ -14,12 +14,14 @@
 
 
     <string name="invalid_email">Email invalide</string>
-    <string name="empty_input">Veuillez remplir ce champs</string>
+    <string name="empty_input">Veuillez remplir ce champ</string>
     <string name="signup_pseudo">Votre pseudo</string>
     <string name="signup2_submit">Valider</string>
 
-    <string name="pseudo_already_use">Ce pseudo est déjà utilisé</string>
-    <string name="email_already_use">Email déjà utilisé</string>
+    <string name="pseudo_already_use">Ce pseudo existe déjà</string>
+    <string name="email_already_use">Cet email est déjà utilisé</string>
     <string name="error">Une erreur est survenue</string>
 
+    <string name="userTag">Joueur</string>
+    <string name="PubTag">Bar</string>
 </resources>
